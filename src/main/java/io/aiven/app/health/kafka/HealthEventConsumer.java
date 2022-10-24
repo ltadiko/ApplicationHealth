@@ -2,7 +2,7 @@ package io.aiven.app.health.kafka;
 
 import io.aiven.app.health.models.HealthStatus;
 import io.aiven.app.health.repository.ApplicationRepository;
-import io.aiven.app.health.services.WebsiteHealthLogsService;
+import io.aiven.app.health.services.consumer.WebsiteHealthLogsService;
 import org.apache.kafka.clients.consumer.Consumer;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
@@ -34,14 +34,18 @@ public class HealthEventConsumer {
         return new KafkaConsumer<>(properties);
     }
 
-
-    public void consumer(ApplicationRepository applicationRepository) throws SQLException {
+    /**
+     *
+     * @param applicationRepository
+     * @throws SQLException
+     */
+    public void consumeAndStore() throws SQLException {
         Consumer<Integer, String> consumer = createConsumer();
         consumer.subscribe(Collections.singletonList(getProperty("kafka.health.audit.topic")));
         while (true) {
             ConsumerRecords<Integer, String> records = consumer.poll(Duration.ofMillis(Long.parseLong(getProperty("KafkaConsumer.pollIntervalInMilliSeconds"))));
             for (ConsumerRecord<Integer, String> consumerRecord : records) {
-                WebsiteHealthLogsService websiteHealthLogsService = new WebsiteHealthLogsService(applicationRepository);
+                WebsiteHealthLogsService websiteHealthLogsService = new WebsiteHealthLogsService();
                 websiteHealthLogsService.addWebsiteHealthStatus(consumerRecord.key(), HealthStatus.valueOf(consumerRecord.value()));
                 System.out.println("Sent to DB " + HealthStatus.valueOf(consumerRecord.value()));
 

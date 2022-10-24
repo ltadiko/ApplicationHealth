@@ -1,4 +1,4 @@
-package io.aiven.app.health.services;
+package io.aiven.app.health.services.producer;
 
 import io.aiven.app.health.models.Website;
 import io.aiven.app.health.repository.ApplicationRepository;

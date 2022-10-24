@@ -1,22 +1,18 @@
 package io.aiven.app.health;
 
-import io.aiven.app.health.services.HealthAuditLogConsumer;
-import io.aiven.app.health.services.PublishAuditLogScheduler;
+import io.aiven.app.health.services.consumer.HealthAuditLogConsumer;
+import io.aiven.app.health.services.producer.PublishAuditLogScheduler;
 
+/**
+ * @author : Lakshmaiah Tatikonda
+ * Main application starts the application by starting a scheduler to check health and publish
+ * Also, it starts the kafka consumer to listen messages from Kafka and to store in DB
+ */
 
 public class MainApplication {
+
     public static void main(String[] args) {
-        checkWebSiteStatusAndPublishToKafka();
-        consumeFromKafkaAndStoreToDB();
-    }
-
-    private static void checkWebSiteStatusAndPublishToKafka() {
-        PublishAuditLogScheduler publishAuditLogScheduler = new PublishAuditLogScheduler();
-        publishAuditLogScheduler.schedule();
-    }
-
-    private static void consumeFromKafkaAndStoreToDB() {
-        HealthAuditLogConsumer healthAuditLogConsumer = new HealthAuditLogConsumer();
-        healthAuditLogConsumer.consumeAndStore();
+        PublishAuditLogScheduler.schedule();
+        HealthAuditLogConsumer.startKafkaConsume();
     }
 }

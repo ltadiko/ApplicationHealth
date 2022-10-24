@@ -2,6 +2,7 @@ package io.aiven.app.health.services;
 
 import io.aiven.app.health.models.Website;
 import io.aiven.app.health.repository.ApplicationRepository;
+import io.aiven.app.health.services.producer.WebsitesService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 

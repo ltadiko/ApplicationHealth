@@ -1,4 +1,4 @@
-package io.aiven.app.health.kafka;
+package io.aiven.app.health.services.producer;
 
 import io.aiven.app.health.models.HealthStatus;
 import org.apache.kafka.clients.producer.KafkaProducer;
