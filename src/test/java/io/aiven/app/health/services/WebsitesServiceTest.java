@@ -1,7 +1,7 @@
 package io.aiven.app.health.services;
 
 import io.aiven.app.health.models.Website;
-import io.aiven.app.health.repository.ApplicationRepository;
+import io.aiven.app.health.repository.ProducerApplicationRepository;
 import io.aiven.app.health.services.producer.WebsitesService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -22,14 +22,14 @@ import static org.mockito.Mockito.when;
 
 
 class WebsitesServiceTest {
-    private ApplicationRepository applicationRepository = mock(ApplicationRepository.class);
-    private WebsitesService underTest = new WebsitesService(applicationRepository);
+    private ProducerApplicationRepository producerApplicationRepository = mock(ProducerApplicationRepository.class);
+    private WebsitesService underTest = new WebsitesService(producerApplicationRepository);
 
     @Test
     @DisplayName("SHOULD return list of websites WHEN repository returns websites")
     void testGetWebSitesSuccess() throws MalformedURLException, SQLException {
         // Setup mock scenario
-        when(applicationRepository.getWebsites()).thenReturn(Arrays.asList(new Website(1, new URL("https://google.com"), "google"), new Website(1, new URL("https://yahoo.com"), "yahoo")));
+        when(producerApplicationRepository.getWebsites()).thenReturn(Arrays.asList(new Website(1, new URL("https://google.com"), "google"), new Website(1, new URL("https://yahoo.com"), "yahoo")));
 
 
         // Execute the service that uses the mocked repository
@@ -38,37 +38,37 @@ class WebsitesServiceTest {
         // Validate the response
         assertNotNull(websiteList);
         assertEquals(2, websiteList.size());
-        verify(applicationRepository).getWebsites();
-        verifyNoMoreInteractions(applicationRepository);
+        verify(producerApplicationRepository).getWebsites();
+        verifyNoMoreInteractions(producerApplicationRepository);
     }
 
     @Test
     @DisplayName("SHOULD throw SQLException WHEN repository throws SQLException")
     void testGetWebSitesSQLxception() throws MalformedURLException, SQLException {
         // Setup mock scenario
-        when(applicationRepository.getWebsites()).thenThrow(new SQLException("Connection Exception"));
+        when(producerApplicationRepository.getWebsites()).thenThrow(new SQLException("Connection Exception"));
 
 
         // Execute the service that uses the mocked repository
         assertThrows(SQLException.class, () -> underTest.getWebsites());
 
         // Validate the response
-        verify(applicationRepository).getWebsites();
-        verifyNoMoreInteractions(applicationRepository);
+        verify(producerApplicationRepository).getWebsites();
+        verifyNoMoreInteractions(producerApplicationRepository);
     }
 
     @Test
     @DisplayName("SHOULD throw MalformedURLException WHEN repository throws MalformedURLException")
     void testGetWebSitesMalformedURLException() throws MalformedURLException, SQLException {
         // Setup mock scenario
-        when(applicationRepository.getWebsites()).thenThrow(new MalformedURLException("Malformed URL Exception"));
+        when(producerApplicationRepository.getWebsites()).thenThrow(new MalformedURLException("Malformed URL Exception"));
 
 
         // Execute the service that uses the mocked repository
         assertThrows(MalformedURLException.class, () -> underTest.getWebsites());
 
         // Validate the response
-        verify(applicationRepository).getWebsites();
-        verifyNoMoreInteractions(applicationRepository);
+        verify(producerApplicationRepository).getWebsites();
+        verifyNoMoreInteractions(producerApplicationRepository);
     }
 }

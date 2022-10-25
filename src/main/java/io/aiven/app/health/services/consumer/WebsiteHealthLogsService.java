@@ -1,19 +1,19 @@
 package io.aiven.app.health.services.consumer;
 
 import io.aiven.app.health.models.HealthStatus;
-import io.aiven.app.health.repository.ApplicationRepository;
+import io.aiven.app.health.repository.ConsumerApplicationRepository;
 
 import java.sql.SQLException;
 
 
 public class WebsiteHealthLogsService {
-    private ApplicationRepository applicationRepository;
+    private ConsumerApplicationRepository consumerApplicationRepository;
 
-    public WebsiteHealthLogsService() {
-        this.applicationRepository = new ApplicationRepository();
+    public WebsiteHealthLogsService(ConsumerApplicationRepository consumerApplicationRepository) {
+        this.consumerApplicationRepository = consumerApplicationRepository;
     }
 
     public void addWebsiteHealthStatus(int websiteId, HealthStatus healthStatus) throws SQLException {
-        applicationRepository.addWebsiteHealthStatus(websiteId, healthStatus);
+        consumerApplicationRepository.addWebsiteHealthStatus(websiteId, healthStatus);
     }
 }

@@ -1,5 +1,7 @@
 package io.aiven.app.health;
 
+import io.aiven.app.health.factory.ConsumerBeanFactory;
+import io.aiven.app.health.factory.ProducerBeanFactory;
 import io.aiven.app.health.services.consumer.HealthAuditLogConsumer;
 import io.aiven.app.health.services.producer.PublishAuditLogScheduler;
 
@@ -12,7 +14,14 @@ import io.aiven.app.health.services.producer.PublishAuditLogScheduler;
 public class MainApplication {
 
     public static void main(String[] args) {
-        PublishAuditLogScheduler.schedule();
-        HealthAuditLogConsumer.startKafkaConsume();
+
+        ProducerBeanFactory producerBeanFactory = new ProducerBeanFactory();
+        PublishAuditLogScheduler publishAuditLogScheduler = producerBeanFactory.getPublishAuditLogScheduler();
+        publishAuditLogScheduler.schedule();
+
+        ConsumerBeanFactory consumerBeanFactory = new ConsumerBeanFactory();
+        HealthAuditLogConsumer healthAuditLogConsumer = consumerBeanFactory.getHealthAuditLogConsumer();
+        healthAuditLogConsumer.startKafkaConsumer();
     }
+
 }

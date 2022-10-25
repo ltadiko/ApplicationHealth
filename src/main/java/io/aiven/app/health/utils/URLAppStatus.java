@@ -10,7 +10,7 @@ public final class URLAppStatus {
 
     }
 
-    public static HealthStatus getStatus(URL url) {
+    public static HealthStatus getStatus(final URL url) {
         try {
             HttpURLConnection con = (HttpURLConnection) url.openConnection();
             con.setRequestMethod("GET");

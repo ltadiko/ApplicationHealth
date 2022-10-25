@@ -1,6 +1,6 @@
 package io.aiven.app.health.services;
 
-import io.aiven.app.health.repository.ApplicationRepository;
+import io.aiven.app.health.repository.ConsumerApplicationRepository;
 import io.aiven.app.health.services.consumer.WebsiteHealthLogsService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -16,8 +16,8 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
 
 
 class WebsiteHealthLogsServiceTest {
-    private ApplicationRepository applicationRepository = mock(ApplicationRepository.class);
-    private WebsiteHealthLogsService underTest = new WebsiteHealthLogsService(applicationRepository);
+    private ConsumerApplicationRepository consumerApplicationRepository = mock(ConsumerApplicationRepository.class);
+    private WebsiteHealthLogsService underTest = new WebsiteHealthLogsService(consumerApplicationRepository);
 
     @Test
     @DisplayName("SHOULD return list of websites WHEN repository returns websites")
@@ -26,15 +26,15 @@ class WebsiteHealthLogsServiceTest {
         underTest.addWebsiteHealthStatus(1, HEALTHY);
 
         // Validate the response
-        verify(applicationRepository).addWebsiteHealthStatus(1, HEALTHY);
-        verifyNoMoreInteractions(applicationRepository);
+        verify(consumerApplicationRepository).addWebsiteHealthStatus(1, HEALTHY);
+        verifyNoMoreInteractions(consumerApplicationRepository);
     }
 
     @Test
     @DisplayName("SHOULD throw SQLException WHEN repository throws SQLException")
     void testGetWebSitesSQLxception() throws SQLException {
         doThrow(new SQLException("Connection Exception"))
-                .when(applicationRepository).addWebsiteHealthStatus(1, HEALTHY);
+                .when(consumerApplicationRepository).addWebsiteHealthStatus(1, HEALTHY);
 
 
         // Execute the service that uses the mocked repository

@@ -11,9 +11,14 @@ public class PublishAuditLogScheduler {
     private static final String TIMER_INITIAL_DELAY = "publisher.scheduler.initialDelayInMilliSeconds";
     private static final String TIMER_PERIOD = "publisher.scheduler.periodInMilliSeconds";
 
-    public static void schedule() {
-        HealthCheck healthCheck = new HealthCheck();
-        ScheduledExecutorService ses = Executors.newScheduledThreadPool(10);
-        ses.scheduleAtFixedRate(healthCheck::checkWebsitesAndPublishStatus, Long.valueOf(getProperty(TIMER_INITIAL_DELAY)), Long.valueOf(getProperty(TIMER_PERIOD)), TimeUnit.MILLISECONDS);
+    private HealthCheck healthCheck;
+
+    public PublishAuditLogScheduler(HealthCheck healthCheck) {
+        this.healthCheck = healthCheck;
+    }
+
+    public void schedule() {
+        ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(10);
+        scheduledExecutorService.scheduleAtFixedRate(healthCheck::checkWebsitesAndPublishStatus, Long.valueOf(getProperty(TIMER_INITIAL_DELAY)), Long.valueOf(getProperty(TIMER_PERIOD)), TimeUnit.MILLISECONDS);
     }
 }
