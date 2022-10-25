@@ -1,7 +1,6 @@
-package io.aiven.app.health.kafka;
+package io.aiven.app.health.services.consumer;
 
 import io.aiven.app.health.models.HealthStatus;
-import io.aiven.app.health.services.consumer.WebsiteHealthLogsService;
 import org.apache.kafka.clients.consumer.Consumer;
 import org.apache.kafka.clients.consumer.ConsumerConfig;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
@@ -9,6 +8,8 @@ import org.apache.kafka.clients.consumer.ConsumerRecords;
 import org.apache.kafka.clients.consumer.KafkaConsumer;
 import org.apache.kafka.common.serialization.IntegerDeserializer;
 import org.apache.kafka.common.serialization.StringDeserializer;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.SQLException;
 import java.time.Duration;
@@ -21,10 +22,13 @@ import static io.aiven.app.health.configuration.KafkaProperties.getKafkaProperti
 /**
  * Kafka Consumer
  */
-public class HealthEventConsumer {
+public class HealthEventKafkaConsumer {
+
+    private static final Logger logger = LogManager.getLogger(HealthEventKafkaConsumer.class);
+
     private WebsiteHealthLogsService websiteHealthLogsService;
 
-    public HealthEventConsumer(WebsiteHealthLogsService websiteHealthLogsService) {
+    public HealthEventKafkaConsumer(WebsiteHealthLogsService websiteHealthLogsService) {
         this.websiteHealthLogsService = websiteHealthLogsService;
     }
 
@@ -48,9 +52,9 @@ public class HealthEventConsumer {
         while (true) {
             ConsumerRecords<Integer, String> records = consumer.poll(Duration.ofMillis(Long.parseLong(getProperty("KafkaConsumer.pollIntervalInMilliSeconds"))));
             for (ConsumerRecord<Integer, String> consumerRecord : records) {
+                logger.debug("Health data for website {} received successfully", consumerRecord.key());
                 websiteHealthLogsService.addWebsiteHealthStatus(consumerRecord.key(), HealthStatus.valueOf(consumerRecord.value()));
-                System.out.println("Sent to DB " + HealthStatus.valueOf(consumerRecord.value()));
-
+                logger.debug("Health data for website {} stored successfully", consumerRecord.key());
             }
         }
     }

@@ -22,9 +22,6 @@ public class Website {
         return url;
     }
 
-    public String getName() {
-        return name;
-    }
 
     @Override
     public String toString() {

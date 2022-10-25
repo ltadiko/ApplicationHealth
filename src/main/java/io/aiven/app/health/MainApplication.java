@@ -2,8 +2,10 @@ package io.aiven.app.health;
 
 import io.aiven.app.health.factory.ConsumerBeanFactory;
 import io.aiven.app.health.factory.ProducerBeanFactory;
-import io.aiven.app.health.services.consumer.HealthAuditLogConsumer;
+import io.aiven.app.health.services.consumer.HealthAuditLogTrigger;
 import io.aiven.app.health.services.producer.PublishAuditLogScheduler;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 /**
  * @author : Lakshmaiah Tatikonda
@@ -12,16 +14,19 @@ import io.aiven.app.health.services.producer.PublishAuditLogScheduler;
  */
 
 public class MainApplication {
+    private static final Logger logger = LogManager.getLogger(MainApplication.class);
 
     public static void main(String[] args) {
-
         ProducerBeanFactory producerBeanFactory = new ProducerBeanFactory();
         PublishAuditLogScheduler publishAuditLogScheduler = producerBeanFactory.getPublishAuditLogScheduler();
         publishAuditLogScheduler.schedule();
+        logger.info("Publish audit log Scheduler started");
 
         ConsumerBeanFactory consumerBeanFactory = new ConsumerBeanFactory();
-        HealthAuditLogConsumer healthAuditLogConsumer = consumerBeanFactory.getHealthAuditLogConsumer();
-        healthAuditLogConsumer.startKafkaConsumer();
+        HealthAuditLogTrigger healthAuditLogTrigger = consumerBeanFactory.getHealthAuditLogConsumer();
+        healthAuditLogTrigger.startKafkaConsumer();
+        logger.info("Audit log kafka consumer started");
+
     }
 
 }

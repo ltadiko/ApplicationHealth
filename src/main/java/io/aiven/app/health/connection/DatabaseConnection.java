@@ -21,14 +21,8 @@ public class DatabaseConnection {
      * @throws SQLException : throws exception when connection creating fails
      */
     public Connection getConnection() throws SQLException {
-        try {
-            System.out.println("get connection");
-            return DriverManager.getConnection(getProperty(DATABASE_URL),
-                    getProperty(DATABASE_USERNAME),
-                    getProperty(DATABASE_PASSWORD));
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-            throw new RuntimeException(e);
-        }
+        return DriverManager.getConnection(getProperty(DATABASE_URL),
+                getProperty(DATABASE_USERNAME),
+                getProperty(DATABASE_PASSWORD));
     }
 }

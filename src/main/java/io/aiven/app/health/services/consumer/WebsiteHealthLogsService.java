@@ -13,7 +13,8 @@ public class WebsiteHealthLogsService {
         this.consumerApplicationRepository = consumerApplicationRepository;
     }
 
-    public void addWebsiteHealthStatus(int websiteId, HealthStatus healthStatus) throws SQLException {
+    public void addWebsiteHealthStatus(final int websiteId,final HealthStatus healthStatus) throws SQLException {
         consumerApplicationRepository.addWebsiteHealthStatus(websiteId, healthStatus);
+
     }
 }

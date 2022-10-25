@@ -1,4 +1,4 @@
-package io.aiven.app.health.services;
+package io.aiven.app.health.services.consumer;
 
 import io.aiven.app.health.repository.ConsumerApplicationRepository;
 import io.aiven.app.health.services.consumer.WebsiteHealthLogsService;
@@ -32,7 +32,7 @@ class WebsiteHealthLogsServiceTest {
 
     @Test
     @DisplayName("SHOULD throw SQLException WHEN repository throws SQLException")
-    void testGetWebSitesSQLxception() throws SQLException {
+    void testGetWebSitesSQLException() throws SQLException {
         doThrow(new SQLException("Connection Exception"))
                 .when(consumerApplicationRepository).addWebsiteHealthStatus(1, HEALTHY);
 

@@ -1,24 +1,23 @@
 package io.aiven.app.health.services.consumer;
 
 import io.aiven.app.health.exception.DatabaseGenericException;
-import io.aiven.app.health.kafka.HealthEventConsumer;
 
 import java.sql.SQLException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-public class HealthAuditLogConsumer {
-    private HealthEventConsumer healthEventConsumer;
+public class HealthAuditLogTrigger {
+    private HealthEventKafkaConsumer healthEventKafkaConsumer;
 
-    public HealthAuditLogConsumer(HealthEventConsumer healthEventConsumer) {
-        this.healthEventConsumer = healthEventConsumer;
+    public HealthAuditLogTrigger(HealthEventKafkaConsumer healthEventKafkaConsumer) {
+        this.healthEventKafkaConsumer = healthEventKafkaConsumer;
     }
 
     public void startKafkaConsumer() {
         ExecutorService executor = Executors.newFixedThreadPool(1);
-        executor.submit(() -> {
+        executor.execute(() -> {
             try {
-                healthEventConsumer.consumeAndStore();
+                healthEventKafkaConsumer.consumeAndStore();
             } catch (SQLException e) {
                 throw new DatabaseGenericException("SQL queries failed while running due to " + e);
             }
