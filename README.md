@@ -4,7 +4,7 @@
 # Application Health Checker Service
 
 Checks health of URL and saves the audit log in database asynchronously to Database.
-App used Kafka to handle asynchronous messages and PostgreSQL to store
+App uses Kafka to handle asynchronous messages and PostgreSQL to store
 
 
 # DISCLAIMER: 
@@ -14,24 +14,21 @@ I will delete the instances and credentials from application.properties after re
 
 ## Application does below steps to store the health information in PostgreSQL
 
-1) Main application starts scheduler to check websites health and publish frequently
-2) Main application starts Kafka Consumer to consumer and store the messages
+1) Main service starts scheduler to check websites health and publish frequently
+2) Main service starts Kafka Consumer to consumer and store the messages
 
-NOTE : Producer and consumer can be run as separate service by making some configuration changes.
+Producer and consumer can be run as separate service by making some configuration changes.
 
 ### Prerequisites to run the application
 
 Configure timer, kafka , postgresql and other properties
 Two Tables are created as mentioned in schema.sql.
 
-### Configurations
+### NOTE : 
+Handling secrets from secret vault / location/ encryption in the application.properties is not in scope of this app.
 
-Configurations can be changed in application.properties.
-Handling secrets in the file is not in scope of this app. this should be handle in CICD strategy.
 
 ### Installation
-
-_Below is an example of how you can instruct your audience on installing and setting up your app. This template doesn't rely on any external dependencies or services._
 
 1. Install Java19 & Maven3.8.6
 2. Clone the repo
@@ -50,7 +47,7 @@ _Below is an example of how you can instruct your audience on installing and set
 ### Monitoring the logs
 The website audit log information can be seen in WEBSITE_HEALTH_LOGS table.
 
-### Things could be done
+### Things could be done 
 
 * AVRO schema with error code and timestamp
 * Unit test coverage
@@ -75,13 +72,7 @@ Project Link: https://github.com/aiven-recruitment/Java-20221021-ltadiko.git] (h
 
 Use this space to list resources you find helpful and would like to give credit to. I've included a few of my favorites to kick things off!
 
-* [Choose an Open Source License](https://choosealicense.com)
-* [GitHub Emoji Cheat Sheet](https://www.webpagefx.com/tools/emoji-cheat-sheet)
-* [Malven's Flexbox Cheatsheet](https://flexbox.malven.co/)
-* [Malven's Grid Cheatsheet](https://grid.malven.co/)
-* [Img Shields](https://shields.io)
-* [GitHub Pages](https://pages.github.com)
-* [Font Awesome](https://fontawesome.com)
-* [React Icons](https://react-icons.github.io/react-icons/search)
+* [Aiven for Apache Kafka®](https://docs.aiven.io/docs/products/kafka.html)
+* [PostgreSQL® welcome#](https://docs.aiven.io/docs/products/postgresql.html)
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
