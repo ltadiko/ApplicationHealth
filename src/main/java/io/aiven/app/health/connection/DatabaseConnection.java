@@ -19,6 +19,7 @@ public class DatabaseConnection {
      *
      * @return : Database Connection
      * @throws SQLException : throws exception when connection creating fails
+     * @throws ClassNotFoundException : throws when postgresql driver class is not found
      */
     public Connection getConnection() throws SQLException {
         return DriverManager.getConnection(getProperty(DATABASE_URL),

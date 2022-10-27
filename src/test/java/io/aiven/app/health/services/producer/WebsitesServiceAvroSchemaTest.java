@@ -2,7 +2,6 @@ package io.aiven.app.health.services.producer;
 
 import io.aiven.app.health.models.Website;
 import io.aiven.app.health.repository.ProducerApplicationRepository;
-import io.aiven.app.health.services.producer.WebsitesService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -12,13 +11,8 @@ import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
-import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
+import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.*;
 
 
 class WebsitesServiceAvroSchemaTest {

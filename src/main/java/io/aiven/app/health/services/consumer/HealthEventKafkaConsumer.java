@@ -1,5 +1,6 @@
 package io.aiven.app.health.services.consumer;
 
+import io.aiven.app.health.avro.AppHealth;
 import io.aiven.app.health.models.HealthStatus;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
 import org.apache.kafka.clients.consumer.ConsumerRecords;
@@ -21,10 +22,10 @@ public class HealthEventKafkaConsumer {
     private static final Logger logger = LogManager.getLogger(HealthEventKafkaConsumer.class);
 
     private WebsiteHealthLogsService websiteHealthLogsService;
-    private KafkaConsumer<Integer, String> kafkaConsumer;
+    private KafkaConsumer<Integer, AppHealth> kafkaConsumer;
 
     public HealthEventKafkaConsumer(WebsiteHealthLogsService websiteHealthLogsService,
-                                    KafkaConsumer<Integer, String> kafkaConsumer) {
+                                    KafkaConsumer<Integer, AppHealth> kafkaConsumer) {
         this.websiteHealthLogsService = websiteHealthLogsService;
         this.kafkaConsumer = kafkaConsumer;
     }
@@ -36,10 +37,16 @@ public class HealthEventKafkaConsumer {
     public void consumeAndStore() throws SQLException {
         kafkaConsumer.subscribe(Collections.singletonList(getProperty("kafka.health.audit.topic")));
         while (true) {
-            ConsumerRecords<Integer, String> records = kafkaConsumer.poll(Duration.ofMillis(Long.parseLong(getProperty("KafkaConsumer.pollIntervalInMilliSeconds"))));
-            for (ConsumerRecord<Integer, String> consumerRecord : records) {
-                logger.debug("Health data for website {} received successfully", consumerRecord.key());
-                websiteHealthLogsService.addWebsiteHealthStatus(consumerRecord.key(), HealthStatus.valueOf(consumerRecord.value()));
+            ConsumerRecords<Integer, AppHealth> records = kafkaConsumer.poll(Duration.ofMillis(Long.parseLong(getProperty("KafkaConsumer.pollIntervalInMilliSeconds"))));
+            for (ConsumerRecord<Integer, AppHealth> consumerRecord : records) {
+                AppHealth appHealth = consumerRecord.value();
+                logger.debug("Health data for website {} received successfully",appHealth.getWebsiteid());
+               try {
+                   websiteHealthLogsService.addWebsiteHealthStatus(consumerRecord.value().getWebsiteid(), HealthStatus.valueOf(appHealth.getStatus()));
+               }catch (Exception e){
+                   e.printStackTrace();
+               }
+
                 logger.debug("Health data for website {} stored successfully", consumerRecord.key());
             }
         }

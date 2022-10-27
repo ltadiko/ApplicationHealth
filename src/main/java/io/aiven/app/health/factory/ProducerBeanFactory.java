@@ -8,7 +8,6 @@ import io.aiven.app.health.services.producer.HealthEventKafkaProducer;
 import io.aiven.app.health.services.producer.PublishAuditLogScheduler;
 import io.aiven.app.health.services.producer.WebsitesService;
 import io.confluent.kafka.serializers.KafkaAvroSerializer;
-import io.confluent.kafka.serializers.KafkaAvroSerializerConfig;
 import org.apache.kafka.clients.producer.KafkaProducer;
 import org.apache.kafka.common.serialization.IntegerSerializer;
 
@@ -34,10 +33,6 @@ public class ProducerBeanFactory {
         Properties properties = getKafkaProperties();
         properties.put("key.serializer", IntegerSerializer.class.getName());
         properties.put("value.serializer", KafkaAvroSerializer.class.getName());
-        properties.put("basic.auth.credentials.source", "USER_INFO");
-        properties.put(KafkaAvroSerializerConfig.USER_INFO_CONFIG, "avnadmin" + ":" + "AVNS_jz09pBrRV6_FUhglAWK");
-        properties.put(KafkaAvroSerializerConfig.AUTO_REGISTER_SCHEMAS, false);
-        properties.put(KafkaAvroSerializerConfig.SCHEMA_REGISTRY_URL_CONFIG, "https://kafka-11984e8e-tlaxman88-efbc.aivencloud.com:20163");
         return new KafkaProducer<>(properties);
     }
 

@@ -18,8 +18,7 @@ public class HealthCheckPublisher {
     private WebsitesService websitesService;
     private HealthEventKafkaProducer healthEventKafkaProducer;
 
-    public HealthCheckPublisher(WebsitesService websitesService,
-                                HealthEventKafkaProducer healthEventKafkaProducer) {
+    public HealthCheckPublisher(WebsitesService websitesService, HealthEventKafkaProducer healthEventKafkaProducer) {
         this.websitesService = websitesService;
         this.healthEventKafkaProducer = healthEventKafkaProducer;
     }
@@ -31,8 +30,7 @@ public class HealthCheckPublisher {
         try {
             //make parallel
             List<Website> websiteList = websitesService.getWebsites();
-            websiteList.stream()
-                    .forEach(this::checkWebsiteHealthAndPublishToKafka);
+            websiteList.forEach(this::checkWebsiteHealthAndPublishToKafka);
         } catch (MalformedURLException e) {
             throw new InvalidURLException("URL malformed exception" + e);
         } catch (SQLException e) {

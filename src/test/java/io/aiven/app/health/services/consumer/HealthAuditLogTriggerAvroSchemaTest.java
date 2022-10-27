@@ -5,10 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import java.sql.SQLException;
 
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.timeout;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 class HealthAuditLogTriggerAvroSchemaTest {
     HealthEventKafkaConsumer healthEventKafkaConsumer = mock(HealthEventKafkaConsumer.class);

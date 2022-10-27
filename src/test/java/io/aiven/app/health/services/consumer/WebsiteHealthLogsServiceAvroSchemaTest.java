@@ -1,7 +1,6 @@
 package io.aiven.app.health.services.consumer;
 
 import io.aiven.app.health.repository.ConsumerApplicationRepository;
-import io.aiven.app.health.services.consumer.WebsiteHealthLogsService;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
@@ -9,10 +8,7 @@ import java.sql.SQLException;
 
 import static io.aiven.app.health.models.HealthStatus.HEALTHY;
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
+import static org.mockito.Mockito.*;
 
 
 class WebsiteHealthLogsServiceAvroSchemaTest {

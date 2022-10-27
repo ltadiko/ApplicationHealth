@@ -14,11 +14,7 @@ import java.sql.SQLException;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.times;
-import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.verifyNoMoreInteractions;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 class ProducerApplicationRepositoryAvroSchemaTest {
 
@@ -65,7 +61,7 @@ class ProducerApplicationRepositoryAvroSchemaTest {
 
     @Test
     @DisplayName("should throw MalformedURLException when url is invalid")
-    void testGetWebsiteInvalidURL() throws SQLException, MalformedURLException {
+    void testGetWebsiteInvalidURL() throws SQLException {
         //given
         when(databaseConnection.getConnection()).thenReturn(connection);
         when(connection.createStatement()).thenReturn(preparedStatement);
