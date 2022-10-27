@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-class ProducerBeanFactoryTest {
+class ProducerBeanFactoryAvroSchemaTest {
     private ProducerBeanFactory underTest = new ProducerBeanFactory();
 
     @Test

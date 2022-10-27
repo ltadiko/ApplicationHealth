@@ -21,7 +21,7 @@ import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
 
-class WebsitesServiceTest {
+class WebsitesServiceAvroSchemaTest {
     private ProducerApplicationRepository producerApplicationRepository = mock(ProducerApplicationRepository.class);
     private WebsitesService underTest = new WebsitesService(producerApplicationRepository);
 

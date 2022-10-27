@@ -10,7 +10,7 @@ import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.timeout;
 import static org.mockito.Mockito.verify;
 
-class HealthAuditLogTriggerTest {
+class HealthAuditLogTriggerAvroSchemaTest {
     HealthEventKafkaConsumer healthEventKafkaConsumer = mock(HealthEventKafkaConsumer.class);
     HealthAuditLogTrigger underTest = new HealthAuditLogTrigger(healthEventKafkaConsumer);
 

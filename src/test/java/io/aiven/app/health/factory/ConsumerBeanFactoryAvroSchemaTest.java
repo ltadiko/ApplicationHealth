@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-class ConsumerBeanFactoryTest {
+class ConsumerBeanFactoryAvroSchemaTest {
     private ConsumerBeanFactory underTest = new ConsumerBeanFactory();
 
     @Test
@@ -14,7 +14,9 @@ class ConsumerBeanFactoryTest {
         assertNotNull(underTest.getDatabaseConnection());
         assertNotNull(underTest.getConsumerApplicationRepository());
         assertNotNull(underTest.getWebsiteHealthLogsService());
+        assertNotNull(underTest.getHealthAuditLogKafkaConsumer());
         assertNotNull(underTest.getHealthAuditLogConsumer());
+
     }
 
 }

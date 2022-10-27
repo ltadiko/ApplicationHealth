@@ -1,0 +1,9 @@
+{
+  "type" : "record",
+  "namespace" : "AppHealth",
+  "name" : "io.aiven.app.health.avro.AppHealth",
+  "fields" : [
+     { "name" : "websiteid" , "type" : "int" },
+     { "name" : "status" , "type" : "string" }
+  ]
+}

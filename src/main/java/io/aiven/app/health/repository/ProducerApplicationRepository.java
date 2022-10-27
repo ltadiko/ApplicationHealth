@@ -35,7 +35,7 @@ public class ProducerApplicationRepository {
     private Website transform(ResultSet rs) throws SQLException, MalformedURLException {
         int id = rs.getInt("id");
         String name = rs.getString("name");
-        URL url = new URL(rs.getString("url"));// rs.getURL("name");
+        URL url = new URL(rs.getString("url"));
         return new Website(id, url, name);
     }
 }

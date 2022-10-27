@@ -9,7 +9,7 @@ import java.net.URL;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-class URLAppStatusTest {
+class URLAppStatusAvroSchemaTest {
 
     //should be improved by passing mock HTTP connection. it fails when google is down
     @Test

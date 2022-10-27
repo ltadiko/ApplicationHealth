@@ -1,5 +1,6 @@
 package io.aiven.app.health;
 
+import io.aiven.app.health.configuration.ConfigurationProperties;
 import io.aiven.app.health.factory.ConsumerBeanFactory;
 import io.aiven.app.health.factory.ProducerBeanFactory;
 import io.aiven.app.health.services.consumer.HealthAuditLogTrigger;
@@ -17,16 +18,19 @@ public class MainApplication {
     private static final Logger logger = LogManager.getLogger(MainApplication.class);
 
     public static void main(String[] args) {
-        ProducerBeanFactory producerBeanFactory = new ProducerBeanFactory();
-        PublishAuditLogScheduler publishAuditLogScheduler = producerBeanFactory.getPublishAuditLogScheduler();
-        publishAuditLogScheduler.schedule();
-        logger.info("Publish audit log Scheduler started");
 
-        ConsumerBeanFactory consumerBeanFactory = new ConsumerBeanFactory();
-        HealthAuditLogTrigger healthAuditLogTrigger = consumerBeanFactory.getHealthAuditLogConsumer();
-        healthAuditLogTrigger.startKafkaConsumer();
-        logger.info("Audit log kafka consumer started");
-
+        if ("yes".equalsIgnoreCase(ConfigurationProperties.getProperty("application.useAsProducer"))) {
+            ProducerBeanFactory producerBeanFactory = new ProducerBeanFactory();
+            PublishAuditLogScheduler publishAuditLogScheduler = producerBeanFactory.getPublishAuditLogScheduler();
+            publishAuditLogScheduler.schedule();
+            logger.info("Publish audit log Scheduler started");
+        }
+        if ("yes".equalsIgnoreCase(ConfigurationProperties.getProperty("application.useAsConsumer"))) {
+            ConsumerBeanFactory consumerBeanFactory = new ConsumerBeanFactory();
+            HealthAuditLogTrigger healthAuditLogTrigger = consumerBeanFactory.getHealthAuditLogConsumer();
+            healthAuditLogTrigger.startKafkaConsumer();
+            logger.info("Audit log kafka consumer started");
+        }
     }
 
 }

@@ -15,7 +15,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 
 
-class WebsiteHealthLogsServiceTest {
+class WebsiteHealthLogsServiceAvroSchemaTest {
     private ConsumerApplicationRepository consumerApplicationRepository = mock(ConsumerApplicationRepository.class);
     private WebsiteHealthLogsService underTest = new WebsiteHealthLogsService(consumerApplicationRepository);
 

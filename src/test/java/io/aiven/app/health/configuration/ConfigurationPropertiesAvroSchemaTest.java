@@ -7,7 +7,7 @@ import static io.aiven.app.health.configuration.ConfigurationProperties.getPrope
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertNull;
 
-class ConfigurationPropertiesTest {
+class ConfigurationPropertiesAvroSchemaTest {
     @Test
     @DisplayName("Should return configured value from application.properties WHEN the key is configured")
     void testConfigurations() {

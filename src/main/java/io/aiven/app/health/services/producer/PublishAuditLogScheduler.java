@@ -15,16 +15,16 @@ public class PublishAuditLogScheduler {
     private static final String TIMER_INITIAL_DELAY = "publisher.scheduler.initialDelayInMilliSeconds";
     private static final String TIMER_PERIOD = "publisher.scheduler.periodInMilliSeconds";
 
-    private HealthCheck healthCheck;
+    private HealthCheckPublisher healthCheckPublisher;
 
-    public PublishAuditLogScheduler(HealthCheck healthCheck) {
-        this.healthCheck = healthCheck;
+    public PublishAuditLogScheduler(HealthCheckPublisher healthCheckPublisher) {
+        this.healthCheckPublisher = healthCheckPublisher;
     }
 
     public void schedule() {
         logger.debug("Audit log publisher scheduler started");
-        try (ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(10)) {
-            scheduledExecutorService.scheduleAtFixedRate(healthCheck::checkWebsitesAndPublishStatus, Long.valueOf(getProperty(TIMER_INITIAL_DELAY)), Long.valueOf(getProperty(TIMER_PERIOD)), TimeUnit.MILLISECONDS);
-        }
+        ScheduledExecutorService scheduledExecutorService = Executors.newScheduledThreadPool(10);
+        scheduledExecutorService.scheduleAtFixedRate(healthCheckPublisher::checkWebsitesAndPublishStatus, Long.parseLong(getProperty(TIMER_INITIAL_DELAY)), Long.parseLong(getProperty(TIMER_PERIOD)), TimeUnit.MILLISECONDS);
     }
+
 }

@@ -17,7 +17,7 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
-class ConsumerApplicationRepositoryTest {
+class ConsumerApplicationRepositoryAvroSchemaTest {
 
     private DatabaseConnection databaseConnection = mock(DatabaseConnection.class);
 

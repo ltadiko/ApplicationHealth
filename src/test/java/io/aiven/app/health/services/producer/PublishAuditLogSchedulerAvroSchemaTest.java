@@ -5,9 +5,9 @@ import org.junit.jupiter.api.Test;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 
-class PublishAuditLogSchedulerTest {
-    private HealthCheck healthCheck = mock(HealthCheck.class);
-    PublishAuditLogScheduler underTest = new PublishAuditLogScheduler(healthCheck);
+class PublishAuditLogSchedulerAvroSchemaTest {
+    private HealthCheckPublisher healthCheckPublisher = mock(HealthCheckPublisher.class);
+    PublishAuditLogScheduler underTest = new PublishAuditLogScheduler(healthCheckPublisher);
 
     @Test
     void testSchedule() {
@@ -16,6 +16,6 @@ class PublishAuditLogSchedulerTest {
         //verify
         //TODO : check how to verify async job
         // verify(healthCheck, timeout(10000)).checkWebsitesAndPublishStatus();
-        verifyNoMoreInteractions(healthCheck);
+        verifyNoMoreInteractions(healthCheckPublisher);
     }
 }

@@ -7,7 +7,7 @@ import java.util.Properties;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-class KafkaPropertiesTest {
+class KafkaPropertiesAvroSchemaTest {
     @Test
     @DisplayName("Should return all mandatory and common kafka properties")
     void testConfigurations() {

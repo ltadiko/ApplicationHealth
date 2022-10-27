@@ -12,14 +12,14 @@ import java.net.MalformedURLException;
 import java.sql.SQLException;
 import java.util.List;
 
-public class HealthCheck {
-    private static final Logger logger = LogManager.getLogger(HealthCheck.class);
+public class HealthCheckPublisher {
+    private static final Logger logger = LogManager.getLogger(HealthCheckPublisher.class);
 
     private WebsitesService websitesService;
     private HealthEventKafkaProducer healthEventKafkaProducer;
 
-    public HealthCheck(WebsitesService websitesService,
-                       HealthEventKafkaProducer healthEventKafkaProducer) {
+    public HealthCheckPublisher(WebsitesService websitesService,
+                                HealthEventKafkaProducer healthEventKafkaProducer) {
         this.websitesService = websitesService;
         this.healthEventKafkaProducer = healthEventKafkaProducer;
     }

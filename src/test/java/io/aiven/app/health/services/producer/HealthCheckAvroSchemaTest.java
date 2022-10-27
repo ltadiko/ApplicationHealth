@@ -19,10 +19,10 @@ import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.verifyNoMoreInteractions;
 import static org.mockito.Mockito.when;
 
-class HealthCheckTest {
+class HealthCheckAvroSchemaTest {
     WebsitesService websitesService = mock(WebsitesService.class);
     private HealthEventKafkaProducer healthEventKafkaProducer = mock(HealthEventKafkaProducer.class);
-    private HealthCheck healthCheck = new HealthCheck(websitesService, healthEventKafkaProducer);
+    private HealthCheckPublisher healthCheckPublisher = new HealthCheckPublisher(websitesService, healthEventKafkaProducer);
 
     @Test
     @DisplayName("SHOULD publish to kafka WHEN websites are configured")
@@ -32,7 +32,7 @@ class HealthCheckTest {
                 new Website(1, new URL("https://unhealthy.website.neverwork.com"), "google"),
                 new Website(2, new URL("https://unhealthy.website.neverwork2.com"), "yahoo"))));
         //when
-        healthCheck.checkWebsitesAndPublishStatus();
+        healthCheckPublisher.checkWebsitesAndPublishStatus();
 
         //then
         verify(websitesService).getWebsites();
@@ -49,7 +49,7 @@ class HealthCheckTest {
         //given
         doThrow(MalformedURLException.class).when(websitesService).getWebsites();
         //when
-        assertThrows(InvalidURLException.class, () -> healthCheck.checkWebsitesAndPublishStatus());
+        assertThrows(InvalidURLException.class, () -> healthCheckPublisher.checkWebsitesAndPublishStatus());
 
         //then
         verify(websitesService).getWebsites();
@@ -63,7 +63,7 @@ class HealthCheckTest {
         //given
         doThrow(SQLException.class).when(websitesService).getWebsites();
         //when
-        assertThrows(DatabaseGenericException.class, () -> healthCheck.checkWebsitesAndPublishStatus());
+        assertThrows(DatabaseGenericException.class, () -> healthCheckPublisher.checkWebsitesAndPublishStatus());
 
         //then
         verify(websitesService).getWebsites();

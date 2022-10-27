@@ -26,6 +26,7 @@ public final class KafkaProperties {
         properties.put("ssl.keystore.location", getProperty("kafka.ssl.keystore.location"));
         properties.put("ssl.keystore.password", getProperty("kafka.ssl.keystore.password"));
         properties.put("ssl.key.password", getProperty("kafka.ssl.key.password"));
+
         return properties;
     }
 }
